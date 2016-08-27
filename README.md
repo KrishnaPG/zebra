@@ -4,6 +4,16 @@
 
 [![Build Status](https://travis-ci.org/zeromq/zebra.svg)](https://travis-ci.org/zeromq/zebra)
 
+Modified to suit Windows (MSVC 2015) and added 3rd party as sub-modules
+
+Static building requires these predefines: 
+````
+CZMQ_BUILD_DRAFT_API
+ZMQ_STATIC
+CZMQ_STATIC
+ZEBRA_STATIC
+````
+
 <A name="toc2-8" title="Contents" />
 ## Contents
 

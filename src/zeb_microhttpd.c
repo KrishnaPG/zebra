@@ -22,6 +22,10 @@
 #include "platform.h"
 #include "zebra_classes.h"
 
+#if (defined (__WINDOWS__))
+#include "gettimeofday.h"
+#endif
+
 #define X_RATELIMIT_LIMIT 10
 #define X_RATELIMIT_INTERVAL 60000
 
@@ -264,7 +268,7 @@ s_send_response (struct MHD_Connection *con, zeb_connection_t *connection, zeb_m
         XRAP_MSG_PUT_OK  == xrap_msg_id (response)) {
         MHD_add_response_header (http_response, MHD_HTTP_HEADER_LOCATION, xrap_msg_location (response));
         char modified[64];
-        rc = sprintf (modified, "%"PRIu64, xrap_msg_date_modified (response));
+        rc = sprintf (modified, "%" PRIu64, xrap_msg_date_modified (response));
         if (rc > 0)
             MHD_add_response_header (http_response, MHD_HTTP_HEADER_LAST_MODIFIED, modified);
     }
@@ -286,7 +290,7 @@ s_send_response (struct MHD_Connection *con, zeb_connection_t *connection, zeb_m
     char remaining[10];
     sprintf (remaining, "%d", zeb_response_rate_remaining (zeb_response));
     char reset[20];
-    sprintf (reset, "%"PRId64, zeb_response_rate_reset (zeb_response));
+    sprintf (reset, "%" PRId64, zeb_response_rate_reset (zeb_response));
     MHD_add_response_header (http_response, "X-RateLimit-Limit", limit);
     MHD_add_response_header (http_response, "X-RateLimit-Remaining", remaining);
     MHD_add_response_header (http_response, "X-RateLimit-Reset", reset);
